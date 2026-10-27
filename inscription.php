@@ -1,5 +1,6 @@
 <?php
 session_start();
+include ('utils/utils.php');
 $message = "";
 if(isset($_POST['inscription'])){
     if(!empty($_POST['prenom']) && !empty($_POST['nom']) && !empty($_POST['email']) && !empty($_POST['mdp1']) && !empty($_POST['mdp2'])){

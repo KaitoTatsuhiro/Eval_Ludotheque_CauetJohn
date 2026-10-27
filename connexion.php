@@ -1,5 +1,6 @@
 <?php
 session_start();
+include ('utils/utils.php');
 $message = "";
 if(isset($_POST['connexion'])){
     if(!empty($_POST['email']) && !empty($_POST['mdp1'])){
