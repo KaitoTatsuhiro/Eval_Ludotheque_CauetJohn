@@ -2,6 +2,7 @@
 session_start();
 include ('utils/utils.php');
 $message = "";
+$form = "";
 if(isset($_POST['connexion'])){
     if(!empty($_POST['email']) && !empty($_POST['mdp1'])){
         if(filter_var($_POST['email'],FILTER_VALIDATE_EMAIL)){
@@ -38,14 +39,19 @@ if(isset($_POST['connexion'])){
         $message = "Remplissez tous les champs.";
     }
 }
-
+//Garder les infos déjà rempli sauf mdp
+$form .= '<label for="email">E-mail : <input type="email" name="email" id="email" value="';
+if(isset($_POST['email'])){
+$form .= $_POST['email'];
+}
+$form .= '" placeholder="email@mail.com"></label>';
 include('includes/header.php');
 ?>
 <main>
     <h2>Connexion</h2>
     <section>
         <form action="" method="post">
-            <label for="email">E-mail : <input type="email" name="email" id="email" placeholder="email@mail.com"></label>
+            <?php echo $form; ?>
             <label for="mdp1">Mot de passe : <input type="password" name="mdp1" id="mdp1" placeholder="12 caractères minimum"></label>
             <input type="submit" name="connexion" value="Valider">
         </form>

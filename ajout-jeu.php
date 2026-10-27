@@ -32,22 +32,30 @@ try{
                     if($dataTitre){
                         $message = "Ce jeu existe déja dans le catalogue.";
                     }else{
-                        $titre = trim($_POST['titre']);
-                        $jMin = trim($_POST['min']);
-                        $jMax = trim($_POST['max']);
-                        $jDuree = trim($_POST['duree']);
-                        $idCat = $_POST['categorie'];
-                        $idMembre = $_SESSION['id'];
-                        $request = $pdo->prepare('INSERT INTO jeu(titre, joueurs_min, joueurs_max, duree, id_categorie, id_membre)VALUES(?, ?, ?, ?, ?, ?);');
-                        $request->bindParam(1,$titre);
-                        $request->bindParam(2,$jMin);
-                        $request->bindParam(3,$jMax);
-                        $request->bindParam(4,$jDuree);
-                        $request->bindParam(5,$idCat);
-                        $request->bindParam(6,$idMembre);
+                        $request = $pdo->prepare('SELECT c.id_categorie FROM categorie c WHERE c.id_categorie=?;');
+                        $request->bindParam(1,$_POST['categorie']);
                         $request->execute();
+                        $dataId = $request->fetch(PDO::FETCH_ASSOC);
+                        if($dataId){
+                                $titre = trim($_POST['titre']);
+                            $jMin = trim($_POST['min']);
+                            $jMax = trim($_POST['max']);
+                            $jDuree = trim($_POST['duree']);
+                            $idCat = $_POST['categorie'];
+                            $idMembre = $_SESSION['id'];
+                            $request = $pdo->prepare('INSERT INTO jeu(titre, joueurs_min, joueurs_max, duree, id_categorie, id_membre)VALUES(?, ?, ?, ?, ?, ?);');
+                            $request->bindParam(1,$titre);
+                            $request->bindParam(2,$jMin);
+                            $request->bindParam(3,$jMax);
+                            $request->bindParam(4,$jDuree);
+                            $request->bindParam(5,$idCat);
+                            $request->bindParam(6,$idMembre);
+                            $request->execute();
 
-                        $message = "Le jeu à bien été ajouté.";
+                            $message = "Le jeu à bien été ajouté.";
+                        }else{
+                            $message = "Catégorie inexistante.";
+                        }
                     }
                 }else{
                     $message = "Veuillez insérer des valeurs réalistes.";

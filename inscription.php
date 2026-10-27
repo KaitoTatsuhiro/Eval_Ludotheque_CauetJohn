@@ -2,6 +2,7 @@
 session_start();
 include ('utils/utils.php');
 $message = "";
+$form = "";
 if(isset($_POST['inscription'])){
     if(!empty($_POST['prenom']) && !empty($_POST['nom']) && !empty($_POST['email']) && !empty($_POST['mdp1']) && !empty($_POST['mdp2'])){
         if(filter_var($_POST['email'],FILTER_VALIDATE_EMAIL)){
@@ -46,6 +47,22 @@ if(isset($_POST['inscription'])){
         $message = "Remplissez tous les champs.";
     }
 }
+//Garde les info si erreur
+$form .= '<label for="prenom">Prénom : <input type="text" name="prenom" value="';
+if(isset($_POST['prenom'])){
+$form .= $_POST['prenom'];
+}
+$form .= '" id="prenom" placeholder="Jean"></label>';
+$form .= '<label for="nom">Nom : <input type="text" name="nom" id="nom" value="';
+if(isset($_POST['nom'])){
+$form .= $_POST['nom'];
+}
+$form .= '" placeholder="Dupont"></label><br>';
+$form .= '<label for="email">E-mail : <input type="email" name="email" id="email" value="';
+if(isset($_POST['email'])){
+$form .= $_POST['email'];
+}
+$form .= '" placeholder="email@mail.com"></label><br>';
 
 include('includes/header.php');
 ?>
@@ -53,9 +70,7 @@ include('includes/header.php');
     <h2>Inscription</h2>
     <section>
         <form action="" method="post">
-            <label for="prenom">Prénom : <input type="text" name="prenom" id="prenom" placeholder="Jean"></label>
-            <label for="nom">Nom : <input type="text" name="nom" id="nom" placeholder="Dupont"></label>
-            <label for="email">E-mail : <input type="email" name="email" id="email" placeholder="email@mail.com"></label>
+            <?php echo $form; ?>
             <label for="mdp1">Mot de passe : <input type="password" name="mdp1" id="mdp1" placeholder="12 caractères minimum"></label>
             <label for="mdp2">Confirmation du mot de passe : <input type="password" name="mdp2" id="mdp2" placeholder="12 caractères minimum"></label>
             <input type="submit" name="inscription" value="Valider">

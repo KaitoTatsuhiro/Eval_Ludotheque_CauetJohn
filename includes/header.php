@@ -4,6 +4,7 @@ if(isset($_SESSION['id'])){
     $connect .= "<p>Bonjour {$_SESSION['prenom']}.</p>";
     $connect .= '<a href="./index.php">Accueil</a>';
     $connect .= '<a href="./ajout-jeu.php">Ajouter un jeu</a>';
+    $connect .= '<a href="./mon-compte.php">Mon compte</a>';
     $connect .= '<a href="./deconnexion.php">Se déconnecter</a>';
 }else{
     $connect .= '<a href="./index.php">Accueil</a>';
